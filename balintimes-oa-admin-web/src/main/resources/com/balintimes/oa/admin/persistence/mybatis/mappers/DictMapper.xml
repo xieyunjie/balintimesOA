@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 必须和mapper interface一致，否则会绑定失败 -->
+<mapper namespace="com.balintimes.oa.admin.persistence.mybatis.mappers.DictMapper">
+	<resultMap type="dict" id="DictResult">
+		<id property="id" column="id" />
+		<result property="label" column="label" />
+		<result property="value" column="value" />
+		<result property="type" column="type" />
+		<result property="description" column="description" />
+		<result property="sort" column="sort" />
+		<result property="create_by" column="create_by" />
+		<result property="create_date" column="create_date" />
+		<result property="update_by" column="update_by" />
+		<result property="update_date" column="update_date" />
+		<result property="remarks" column="remarks" />
+	</resultMap>
+
+	
+	<!-- 查找所有字典 -->
+	<select id="findAllDicts" resultMap="DictResult">
+		SELECT
+		ID, LABEL, VALUE, TYPE, DESCRIPTION, SORT, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, REMARKS 
+		FROM oasys_dict
+		WHERE del_flag="0"
+	</select>
+</mapper>

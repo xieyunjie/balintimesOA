@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 必须和mapper interface一致，否则会绑定失败 -->
+<mapper
+	namespace="com.balintimes.oa.admin.persistence.mybatis.mappers.LoginLogMapper">
+
+	<resultMap type="loginLog" id="LoginLogResult">
+		<id property="id" column="id" />
+		<result property="userId" column="userid" />
+		<result property="userName" column="username" />
+		<result property="loginDate" column="login_date" />
+		<result property="loginIp" column="login_ip" />
+		<result property="browseUserAgent" column="browse_useragent" />
+	</resultMap>
+
+	<!-- 查找所有登陆历史 -->
+	<select id="findAllLoginLog" resultMap="LoginLogResult">
+		SELECT
+		ID, USERID,
+		USERNAME, LOGIN_DATE, LOGIN_IP, BROWSE_USERAGENT
+		FROM oasys_log_login
+	</select>
+
+	<!-- 根据用户ID，查找用户登录历史 -->
+	<select id="findLoginLogByUserId" parameterType="hashmap" resultMap="LoginLogResult">
+		SELECT
+		ID, USERID, USERNAME, LOGIN_DATE, LOGIN_IP, BROWSE_USERAGENT
+		FROM oasys_log_login
+		WHERE 1=1
+		<if test="userId !=null and userId !=''">
+			AND USERID = #{userId}
+		</if>
+		LIMIT #{startIndex},#{pageSize}
+	</select>
+
+	<!-- 根据用户ID，查找用户登录历史总数 -->
+	<select id="findLoginLogTotalCountByUserId" parameterType="int"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM oasys_log_login
+		WHERE USERID=#{USERID}
+	</select>
+
+</mapper>

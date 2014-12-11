@@ -1,0 +1,12 @@
+<sitemesh>
+	<!-- 个人设置 -->
+	<mapping path="/profile/*" decorator="/WEB-INF/views/decorator/decorator_profile.jsp"/>
+	<!-- 系统设置 -->
+	<mapping path="/sys/*" decorator="/WEB-INF/views/decorator/decorator_sys.jsp"/>
+	<!-- 机构管理 -->
+	<mapping path="/org/*" decorator="/WEB-INF/views/decorator/decorator_org.jsp"/>
+	<!-- 默认全局 -->
+	<mapping path="/*" decorator="/WEB-INF/views/decorator/decorator.jsp"/>
+	<!-- Exclude path from decoration. -->
+	<mapping path="/org/area/select" exclude="true"/>
+</sitemesh>

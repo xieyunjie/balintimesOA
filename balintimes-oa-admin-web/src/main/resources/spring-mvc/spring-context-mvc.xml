@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- 加载配置属性文件 -->
+	<context:property-placeholder
+		ignore-unresolvable="true" location="classpath*:/balintimes-oa.properties" />
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="false">
+			<bean id="jacksonMessageConverter"
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper" ref="jacksonObjectMapper" />
+				<property name="supportedMediaTypes">
+					<list>
+						<bean class="org.springframework.http.MediaType">
+							<constructor-arg index="0" value="application" />
+							<constructor-arg index="1" value="json" />
+							<constructor-arg index="2" value="UTF-8" />
+						</bean>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<bean id="jaxbAnnotationInspector"
+		class="com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector" />
+
+	<bean id="jacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+		<property name="annotationIntrospector" ref="jaxbAnnotationInspector" />
+	</bean>
+
+	<!-- 静态资源请求路径映射 -->
+	
+	<mvc:resources mapping="/js/treetable/**" location="/resources/ludo-jquery-treetable/" />
+	<mvc:resources mapping="/js/ztree/**" location="/resources/jquery-ztree/" />
+	<mvc:resources mapping="/js/jbox/**" location="/resources/jquery-jbox/" />
+	<mvc:resources mapping="/js/**" location="/resources/js/" />
+	
+	<mvc:resources mapping="/css/treetable/**" location="/resources/ludo-jquery-treetable/" />
+	<mvc:resources mapping="/css/ztree/**" location="/resources/jquery-ztree/" />
+	<mvc:resources mapping="/css/jbox/**" location="/resources/jquery-jbox/" />
+	<mvc:resources mapping="/css/**" location="/resources/css/" />
+	
+	<mvc:resources mapping="/img/**" location="/resources/img/" />
+	<mvc:resources mapping="/font/**" location="/resources/font/" />
+	<mvc:resources mapping="/flash/**" location="/resources/flash/" />
+	<mvc:default-servlet-handler />
+
+	<!-- 视图文件解析配置 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="${web.view.prefix}" />
+		<property name="suffix" value="${web.view.suffix}" />
+		<!-- 允许jstl中访问spring中的bean -->
+		<property name="exposeContextBeansAsAttributes" value="true"/>
+	</bean>
+</beans>
