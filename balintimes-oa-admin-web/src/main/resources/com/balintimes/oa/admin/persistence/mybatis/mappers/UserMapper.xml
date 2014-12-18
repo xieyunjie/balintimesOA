@@ -7,33 +7,29 @@
 	<resultMap type="user" id="UserResult">
 		<id property="id" column="id" />
 		<result property="username" column="username" />
-		<result property="user_type" column="user_type" />
+		<result property="user_type" column="userType" />
 		<result property="active" column="active" />
 		<result property="remarks" column="remarks" />
-		<result property="login_ip" column="login_ip" />
-		<result property="login_date" column="login_date" />
-		<result property="create_by" column="create_by" />
-		<result property="create_date" column="create_date" />
-		<result property="update_by" column="update_by" />
-		<result property="update_date" column="update_date" />
-		<result property="del_flag" column="del_flag" />
+		<result property="login_ip" column="loginIp" />
+		<result property="login_date" column="loginDate" />
+		<result property="create_by" column="createBy" />
+		<result property="create_date" column="createDate" />
+		<result property="update_by" column="updateBy" />
+		<result property="update_date" column="updateDate" />
+		<result property="del_flag" column="delFlag" />
 	</resultMap>
 
 	<select id="findAllUsers" resultMap="UserResult">
-		SELECT
-		ID, USERNAME, USER_TYPE, ACTIVE, REMARKS, LOGIN_IP, LOGIN_DATE, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, DEL_FLAG 
-		FROM oasys_user
+		SELECT id,username,userType,active,remarks,loginIp,loginDate,createBy,createDate,updateBy,updateDate,delFlag FROM oasys_user
 	</select>
 
 	<select id="findUserById" parameterType="int" resultType="user">
-		SELECT
-		ID, USERNAME, USER_TYPE, ACTIVE, REMARKS, LOGIN_IP, LOGIN_DATE, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, DEL_FLAG
-		FROM oasys_user WHERE ID=#{Id}
+		SELECT id,username,userType,active,remarks,loginIp,loginDate,createBy,createDate,updateBy,updateDate,delFlag FROM oasys_user WHERE ID=#{Id}
 	</select>
 
-	<insert id="insertUser" parameterType="user" useGeneratedKeys="true"
+<!-- 	<insert id="insertUser" parameterType="user" useGeneratedKeys="true"
 		keyProperty="id">
 		INSERT INTO oasys_user(username,PASSWORD,EMAIL,ACTIVE)
 		VALUES(#{username},#{password},#{email},#{active})
-	</insert>
+	</insert> -->
 </mapper>
